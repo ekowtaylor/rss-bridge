@@ -28,13 +28,22 @@ class SoundCloudBridge extends BridgeAbstract {
 
 	public function collectData(){
 		$res = $this->apiGet('resolve', array(
+<<<<<<< HEAD
 			'url' => 'https://soundcloud.com/' . $this->getInput('u')
+=======
+			'url' => 'http://www.soundcloud.com/' . $this->getInput('u')
+>>>>>>> Rebase from origin commit 366d2d6
 		)) or returnServerError('No results for this query');
 
 		$this->feedIcon = $res->avatar_url;
 
+<<<<<<< HEAD
 		$tracks = $this->apiGet('users/' . urlencode($res->id) . '/' . $this->getInput('t'))->collection
 			or returnServerError('No results for this user/playlist');
+=======
+		$tracks = $this->apiGet('users/' . urlencode($res->id) . '/tracks')
+			or returnServerError('No results for this user');
+>>>>>>> Rebase from origin commit 366d2d6
 
 		$numTracks = min(count($tracks), 10);
 		for($i = 0; $i < $numTracks; $i++) {
@@ -44,8 +53,13 @@ class SoundCloudBridge extends BridgeAbstract {
 			$item['timestamp'] = strtotime($tracks[$i]->created_at);
 			$item['content'] = nl2br($tracks[$i]->description);
 			$item['enclosures'] = array($tracks[$i]->uri
+<<<<<<< HEAD
 				. '/stream?client_id='
 				. $this->getClientID());
+=======
+			. '/stream?client_id='
+			. $this->getClientID());
+>>>>>>> Rebase from origin commit 366d2d6
 
 			$item['id'] = self::URI
 				. urlencode($this->getInput('u'))
@@ -108,14 +122,22 @@ class SoundCloudBridge extends BridgeAbstract {
 
 		// Without url=http, this returns a 404
 		$playerHTML = getContents('https://w.soundcloud.com/player/?url=http')
+<<<<<<< HEAD
 		or returnServerError('Unable to get player page.');
+=======
+			or returnServerError('Unable to get player page.');
+>>>>>>> Rebase from origin commit 366d2d6
 		$regex = '/widget-.+?\.js/';
 		if(preg_match($regex, $playerHTML, $matches) == false)
 			returnServerError('Unable to find widget JS URL.');
 		$widgetURL = 'https://widget.sndcdn.com/' . $matches[0];
 
 		$widgetJS = getContents($widgetURL)
+<<<<<<< HEAD
 		or returnServerError('Unable to get widget JS page.');
+=======
+			or returnServerError('Unable to get widget JS page.');
+>>>>>>> Rebase from origin commit 366d2d6
 		$regex = '/client_id.*?"(.+?)"/';
 		if(preg_match($regex, $widgetJS, $matches) == false)
 			returnServerError('Unable to find client ID.');
@@ -126,7 +148,11 @@ class SoundCloudBridge extends BridgeAbstract {
 	}
 
 	private function buildAPIURL($endpoint, $parameters){
+<<<<<<< HEAD
 		return 'https://api-v2.soundcloud.com/'
+=======
+		return 'https://api.soundcloud.com/'
+>>>>>>> Rebase from origin commit 366d2d6
 			. $endpoint
 			. '?'
 			. http_build_query($parameters);
