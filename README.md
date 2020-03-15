@@ -267,5 +267,3 @@ We want to share with friends, using open protocols: RSS, Atom, XMPP, whatever. 
 We are rebuilding bridges you have wilfully destroyed.
 
 Get your shit together: Put RSS/Atom back in.
-
-EKT's version
