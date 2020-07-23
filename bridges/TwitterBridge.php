@@ -201,8 +201,11 @@ EOD
 		);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		$data = json_decode($this->getApiContents($this->getApiURI()));
 =======
+=======
+>>>>>>> bc11cf38ce5a3811a4bbf4a3c25ebdce3b47bc0a
 		if(php_sapi_name() === 'cli' && empty(ini_get('curl.cainfo'))) {
 			$cookies = $this->getCookies($page);
 			$html = getSimpleHTMLDOM($page, array_merge($header, array("Cookie: $cookies")));
