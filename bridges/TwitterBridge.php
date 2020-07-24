@@ -200,19 +200,7 @@ EOD
 			'User-Agent: Mozilla/5.0 (Windows NT 9.0; WOW64; Trident/7.0; rv:11.0) like Gecko'
 		);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 		$data = json_decode($this->getApiContents($this->getApiURI()));
-=======
-=======
->>>>>>> bc11cf38ce5a3811a4bbf4a3c25ebdce3b47bc0a
-		if(php_sapi_name() === 'cli' && empty(ini_get('curl.cainfo'))) {
-			$cookies = $this->getCookies($page);
-			$html = getSimpleHTMLDOM($page, array_merge($header, array("Cookie: $cookies")));
-		} else {
-			$html = getSimpleHTMLDOM($page, $header, array(CURLOPT_COOKIEFILE => ''));
-		}
->>>>>>> Rebase from origin commit 366d2d6
 
 		if(!$data) {
 			switch($this->queriedContext) {
