@@ -13,6 +13,9 @@ class MyJoyOnlineBridge extends BridgeAbstract {
 				'type' => 'list',
 				'values' => array(
 					'All articles' => '',
+					'Movies' => 'entertainment_movies',
+					'Music' => 'entertainment_music',
+					'Radio & TV' => 'entertainment_radio-tv',
 					'Enertainment' => 'entertainment',
 					'Business' => 'business',
 					'Sports' => 'sports',
@@ -44,23 +47,25 @@ class MyJoyOnlineBridge extends BridgeAbstract {
 	public function collectData() {
 
 		// Retrieve and check user input
-		$topic = str_replace('-', '/', $this->getInput('topic'));
+		$topic = str_replace('_', '/', $this->getInput('topic'));
 		if (!empty($topic) && (substr_count($topic, '/') > 1 || !ctype_alpha(str_replace('/', '', $topic))))
 			returnClientError('Invalid topic: ' . $topic);
 
 		// Retrieve webpage
 		$pageUrl = self::URI . (empty($topic) ? 'category/' : $topic . '/');
+		#$pageUrl = self::URI . 'category/' . $topic ;
 		$html = getSimpleHTMLDOM($pageUrl)
 		or returnServerError('Could not request MyJoyOnline: ' . $pageUrl);
+		
 
 		// Process articles
-		foreach($html->find('div.assetBody, div.riverPost') as $element) {
+		foreach($html->find('div.mb4, div.riverPost') as $element) {
 
 			if(count($this->items) >= 10) {
 				break;
 			}
 
-			$article_title = trim($element->find('h2, h3', 0)->plaintext);
+			$article_title = trim($element->find('h3, h4', 0)->plaintext);
 			$article_uri = self::URI . substr($element->find('a', 0)->href, 1);
 			$article_thumbnail = $element->parent()->find('img[src]', 0)->src;
 			$article_timestamp = strtotime($element->find('time.assetTime, div.timeAgo', 0)->plaintext);
