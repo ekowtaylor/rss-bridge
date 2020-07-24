@@ -50,9 +50,13 @@ class MyJoyOnlineBridge extends BridgeAbstract {
 		$topic = str_replace('_', '/', $this->getInput('topic'));
 		if (!empty($topic) && (substr_count($topic, '/') > 1 || !ctype_alpha(str_replace('/', '', $topic))))
 			returnClientError('Invalid topic: ' . $topic);
+		
+		print $topic;
 
 		// Retrieve webpage
 		$pageUrl = self::URI . (empty($topic) ? 'category/' : $topic . '/');
+		print $pageUrl;
+		
 		#$pageUrl = self::URI . 'category/' . $topic ;
 		$html = getSimpleHTMLDOM($pageUrl)
 		or returnServerError('Could not request MyJoyOnline: ' . $pageUrl);
