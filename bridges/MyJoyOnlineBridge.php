@@ -2,8 +2,8 @@
 class MyJoyOnlineBridge extends BridgeAbstract {
 
 	const MAINTAINER = 'ekowtaylor';
-	const NAME = 'CNET News';
-	const URI = 'https://www.cnet.com/';
+	const NAME = 'MyoyOnline News';
+	const URI = 'https://www.myjoyonline.com/';
 	const CACHE_TIMEOUT = 3600; // 1h
 	const DESCRIPTION = 'Returns the newest articles.';
 	const PARAMETERS = array(
@@ -13,15 +13,12 @@ class MyJoyOnlineBridge extends BridgeAbstract {
 				'type' => 'list',
 				'values' => array(
 					'All articles' => '',
-					'Apple' => 'apple',
-					'Google' => 'google',
-					'Microsoft' => 'tags-microsoft',
-					'Computers' => 'topics-computers',
-					'Mobile' => 'topics-mobile',
-					'Sci-Tech' => 'topics-sci-tech',
-					'Security' => 'topics-security',
-					'Internet' => 'topics-internet',
-					'Tech Industry' => 'topics-tech-industry'
+					'Enertainment' => 'entertainment',
+					'Business' => 'business',
+					'Sports' => 'sports',
+					'Opinion' => 'opinion',
+					'Media' => 'photo-story',
+					'News' => 'news'
 				)
 			)
 		)
@@ -52,9 +49,9 @@ class MyJoyOnlineBridge extends BridgeAbstract {
 			returnClientError('Invalid topic: ' . $topic);
 
 		// Retrieve webpage
-		$pageUrl = self::URI . (empty($topic) ? 'news/' : $topic . '/');
+		$pageUrl = self::URI . (empty($topic) ? 'category/' : $topic . '/');
 		$html = getSimpleHTMLDOM($pageUrl)
-		or returnServerError('Could not request CNET: ' . $pageUrl);
+		or returnServerError('Could not request MyJoyOnline: ' . $pageUrl);
 
 		// Process articles
 		foreach($html->find('div.assetBody, div.riverPost') as $element) {
